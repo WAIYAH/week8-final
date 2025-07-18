@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, Play } from 'lucide-react';
 import axios from 'axios';
 import io from 'socket.io-client';
+import toast from 'react-hot-toast';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
@@ -42,6 +43,7 @@ const TutorialDetail = () => {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching tutorial:', error);
+      toast.error('Failed to load tutorial');
       setLoading(false);
     }
   };

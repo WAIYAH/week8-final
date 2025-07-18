@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Lock, Mail } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import toast from 'react-hot-toast';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -26,9 +27,11 @@ const AdminLogin = () => {
     try {
       const response = await axios.post(`${API_URL}/auth/login`, data);
       login(response.data.token);
+      toast.success('Login successful!');
       navigate('/admin/dashboard');
     } catch (error) {
       setError(error.response?.data?.message || 'Login failed');
+      toast.error(error.response?.data?.message || 'Login failed');
     } finally {
       setLoading(false);
     }

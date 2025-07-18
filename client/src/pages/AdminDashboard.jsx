@@ -4,6 +4,7 @@ import { Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import toast from 'react-hot-toast';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -60,15 +61,17 @@ const AdminDashboard = () => {
 
       if (editingTutorial) {
         await axios.put(`${API_URL}/tutorials/${editingTutorial._id}`, tutorialData, config);
+        toast.success('Tutorial updated successfully!');
       } else {
         await axios.post(`${API_URL}/tutorials`, tutorialData, config);
+        toast.success('Tutorial created successfully!');
       }
 
       fetchTutorials();
       resetForm();
     } catch (error) {
       console.error('Error saving tutorial:', error);
-      alert('Error saving tutorial. Please try again.');
+      toast.error('Error saving tutorial. Please try again.');
     }
   };
 
@@ -94,9 +97,10 @@ const AdminDashboard = () => {
 
       await axios.delete(`${API_URL}/tutorials/${id}`, config);
       fetchTutorials();
+      toast.success('Tutorial deleted successfully!');
     } catch (error) {
       console.error('Error deleting tutorial:', error);
-      alert('Error deleting tutorial. Please try again.');
+      toast.error('Error deleting tutorial. Please try again.');
     }
   };
 

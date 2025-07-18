@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Clock, Users } from 'lucide-react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -38,6 +39,7 @@ const Tutorials = () => {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching tutorials:', error);
+      toast.error('Failed to load tutorials');
       setLoading(false);
     }
   };
