@@ -10,3 +10,6 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html']
 };
+
+// Note: Adjust the collectCoverageFrom paths based on your actual project structure.
+// This configuration is for a Node.js server using Jest for testing.
