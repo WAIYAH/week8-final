@@ -78,10 +78,13 @@ const sampleTutorials = [
   }
 ];
 
+
 const seedDatabase = async () => {
   try {
-    // Connect to MongoDB
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/firstaidguru');
+    // Connect to MongoDB using only environment variable
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+    });
     console.log('Connected to MongoDB');
 
     // Clear existing data
@@ -96,7 +99,7 @@ const seedDatabase = async () => {
     // Create default admin
     const admin = new Admin({
       email: 'admin@firstaidguru.com',
-      password: 'password123'
+      password: 'password123', // Ensure Admin model hashes this password
     });
     await admin.save();
     console.log('Default admin created');
@@ -106,7 +109,7 @@ const seedDatabase = async () => {
     
     process.exit(0);
   } catch (error) {
-    console.error('Error seeding database:', error);
+    console.error('Error seeding database:', error.message);
     process.exit(1);
   }
 };
